@@ -1,0 +1,15 @@
+﻿@page "/DbList"
+
+<RadzenDataGrid Data="@EntityList.DbModels"
+                TItem="CarDriverViewModel"
+                @ref="_modelsGrid"
+                AllowFiltering="true"
+                AllowPaging="true"
+                PageSize="100"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Width="200px" TItem="CarDriverViewModel" Property="@nameof(CarDriverViewModel.DateAdd)" Title="DateAdd" />
+        <RadzenDataGridColumn Width="200px" TItem="CarDriverViewModel" Property="@nameof(CarDriverViewModel.Car)" Title="Cars" />
+        <RadzenDataGridColumn Width="200px" TItem="CarDriverViewModel" Property="@nameof(CarDriverViewModel.Driver)" Title="Drivers" />
+    </Columns>
+</RadzenDataGrid>

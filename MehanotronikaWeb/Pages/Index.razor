@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<RadzenButton class="pb-2 pr-2" Disabled="@_carThStopped" Click="@StopCar">Остановить поток машин</RadzenButton>
+<RadzenButton class="pb-2 pr-2" Disabled="@_driverThStopped" Click="@StopDriver">Остановить поток водителей</RadzenButton>
+<RadzenButton class="pb-2 pr-2" Disabled="@(!_carThStopped)"  Click="@GoCar">Востановить поток машин</RadzenButton>
+<RadzenButton class="pb-2 pr-2" Disabled="@(!_driverThStopped)" Click="@GoDriver">Востановить поток водителей</RadzenButton>
+
+<RadzenDataGrid Data="@EntityList.Models" 
+                TItem="CarDriverViewModel"
+                @ref="_modelsGrid"
+                AllowFiltering="true" 
+                AllowPaging="true" 
+                PageSize="100" 
+                AllowSorting="true">
+      <Columns>
+        <RadzenDataGridColumn Width="200px" TItem="CarDriverViewModel" Property="@nameof(CarDriverViewModel.DateAdd)" Title="DateAdd" />
+        <RadzenDataGridColumn Width="200px" TItem="CarDriverViewModel" Property="@nameof(CarDriverViewModel.Car)" Title="Cars" />
+        <RadzenDataGridColumn Width="200px" TItem="CarDriverViewModel" Property="@nameof(CarDriverViewModel.Driver)" Title="Drivers" />
+      </Columns>
+  </RadzenDataGrid>
