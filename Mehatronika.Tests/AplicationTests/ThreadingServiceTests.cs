@@ -41,7 +41,6 @@ public class ThreadingServiceTests
     ThreadingService _service = new ThreadingService(_carServiceMock, _driverServiceMock, _timerMock, _entityList, _loggerMock);
 
     _service.Start();
-
     Thread.Sleep(5000);
     _service.StopDriveThread();
     _service.StopCarThread();
