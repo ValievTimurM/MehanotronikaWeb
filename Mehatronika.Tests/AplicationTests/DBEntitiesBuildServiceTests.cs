@@ -29,6 +29,25 @@ internal class DBEntitiesBuildServiceTests
   }
 
   [Test]
+  public void BuildViewModels_GetDriveThrowException_LoggerHasReceivedInCatchSection()
+  {
+    var _timerMock = new ThreadTimer();
+    var _entityList = EntityList.getInstance();
+    _entityList.DbModels = new Stack<CarDriverViewModel>();
+    object state = null;
+    var ex = new Exception("Test exception");
+    _carServiceMock.GetLast().Returns(Car.New("volvo"));
+    _driverServiceMock.GetLast().Returns(Task.FromException<Driver>(ex));
+    DBEntitiesBuildService _service = new DBEntitiesBuildService(_entityList, _loggerMock, _carServiceMock, _driverServiceMock);
+
+    _service.BuildViewModels(state);
+    int result = _entityList.DbModels.Count();
+
+    _loggerMock.Received(1).LogError(ex, "Ошибка при построении списка моделей из БД.");
+    Assert.That(result, Is.EqualTo(0));
+  }
+
+  [Test]
   public void BuildViewModels_ServicesReturnsEntities_BuildTwoModels()
   {
     var _timerMock = new ThreadTimer();
@@ -44,8 +63,6 @@ internal class DBEntitiesBuildServiceTests
 
     Assert.That(result, Is.EqualTo(2));
   }
-
-
 
   [Test]
   public void BuildViewModels_CarAlreadyExistInDbList_NotAddedCarToList()
@@ -83,25 +100,6 @@ internal class DBEntitiesBuildServiceTests
     int result = _entityList.DbModels.Count();
 
     Assert.That(result, Is.EqualTo(2));
-  }
-
-  [Test]
-  public void BuildViewModels_GetDriveThrowException_LoggerHasReceivedInCatchSection()
-  {
-    var _timerMock = new ThreadTimer();
-    var _entityList = EntityList.getInstance();
-    _entityList.DbModels = new Stack<CarDriverViewModel>();
-    object state = null;
-    var ex = new Exception("Test exception");
-    _carServiceMock.GetLast().Returns(Car.New("volvo"));
-    _driverServiceMock.GetLast().Returns(Task.FromException<Driver>(ex));
-    DBEntitiesBuildService _service = new DBEntitiesBuildService(_entityList, _loggerMock, _carServiceMock, _driverServiceMock);
-
-    _service.BuildViewModels(state);
-    int result = _entityList.DbModels.Count();
-
-    _loggerMock.Received(1).LogError(ex, "Ошибка при построении списка моделей из БД.");
-    Assert.That(result, Is.EqualTo(0));
   }
 
   [Test]
