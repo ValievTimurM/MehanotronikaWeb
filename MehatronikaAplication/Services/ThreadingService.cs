@@ -131,7 +131,14 @@ namespace MehatronikaAplication.Services
     {
       Task.Run(async () =>
       {
-        await _carService.Add(car);
+        try
+        {
+          await _carService.Add(car);
+        }
+        catch (Exception ex)
+        {
+          _logger.LogError(ex, $"Ошибка сохранения машины");
+        }
       });
     }
 
@@ -139,7 +146,14 @@ namespace MehatronikaAplication.Services
     {
       Task.Run(async () =>
       {
-        await _driveService.Add(driver);
+        try
+        {
+          await _driveService.Add(driver);
+        }
+        catch (Exception ex) 
+        {
+          _logger.LogError(ex,$"Ошибка сохранения водителя");
+        }
       });
     }
 
